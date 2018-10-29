@@ -45,6 +45,6 @@
     "typescript-ioc": "^1.0.2"
   },
   "devDependencies": {
-    "db-migrate-pg": "^0.2.5"
+    "db-migrate": "^0.11.3"
   }
 }
