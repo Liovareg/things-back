@@ -23,27 +23,18 @@ export default class Rechi {
     ) { }
 
     private async initApp() {
-        const type: DatabaseType = "postgres";
-        const configType: DatabaseType = config.get<DatabaseType>('db.type') as DatabaseType;
-
-        await createConnection(
-            {
-                type: type,
-                host: config.get('db.host'),
-                port: config.get('db.port'),
-                username: config.get('db.username'),
-                password: config.get('db.password'),
-                database: config.get('db.database'),
-                schema: config.get('db.schema'),
-                entities: [
-                    Item, User
-                ],
-                extra: {
-                    ssl: true
-                },
-                synchronize: true,
-                logging: false
-            })
+        await createConnection({
+            type: 'postgres',
+            url: process.env.DATABASE_URL,
+            entities: [
+                Item, User
+            ],
+            extra: {
+                ssl: true
+            },
+            synchronize: false,
+            logging: false
+        });
 
         const app: Koa = new Koa();
         const router: Router = new Router();
