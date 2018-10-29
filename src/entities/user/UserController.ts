@@ -27,7 +27,7 @@ export default class UserController {
             user.hashPassword(ctx.request.body.password);
             ctx.body = await user.save();
         } catch (e) {
-            ctx.throw(400, e.message);
+            ctx.throw(400, e);
         }
     }
 
