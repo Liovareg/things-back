@@ -1,0 +1,12 @@
+{
+    "db": {
+        "driver": "pg",
+        "user": "vnnpjqtzzeptqh",
+        "password": "b221874fc9a1d8c6402bec60819d6556f6aa5f1438a164dc8417a43911f5b118",
+        "host": "ec2-79-125-8-105.eu-west-1.compute.amazonaws.com",
+        "port": 5432,
+        "database": "dfu6ef3jibta49",
+        "schema": "things"
+    },
+    "jwtSecret": "secret"
+}
