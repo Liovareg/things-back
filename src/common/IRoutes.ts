@@ -1,7 +1,11 @@
 import * as Router from "koa-router";
 import Route from "../common/Route";
+import { Inject } from "typescript-ioc";
+import Logger from "./Logger";
 
 export default abstract class IRoutes {
+
+    @Inject private logger!: Logger
 
     protected abstract getRoutes(): Route[];
 
@@ -12,7 +16,7 @@ export default abstract class IRoutes {
     }
 
     private registerRoute = (route: Route, router: Router) => {
-        console.log('Registering route', route);
+        this.logger.info(`Registering route ${route.$method.toUpperCase()} ${route.$path}`);
         
         switch (route.$method) {
             case ("get"):
