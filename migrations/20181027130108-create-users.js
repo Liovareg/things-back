@@ -15,7 +15,7 @@ var seed;
 };
 
 exports.up = async function(db) {
-  return await db.createTable('users', {
+  return await db.createTable('user', {
     id: { type: 'int', primaryKey: true },
     email: 'string',
     name: 'string',
@@ -25,7 +25,7 @@ exports.up = async function(db) {
 };
 
 exports.down = async function(db) {
-  return await db.dropTable('users')
+  return await db.dropTable('user')
 };
 
 exports._meta = {

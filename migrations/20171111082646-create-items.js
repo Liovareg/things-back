@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = async function(db) {
-  return await db.createTable('items', {
+  return await db.createTable('item', {
     id: { type: 'int', primaryKey: true },
     name: 'string',
     description: 'string'
@@ -23,7 +23,7 @@ exports.up = async function(db) {
 };
 
 exports.down = async function(db) {
-  return await db.dropTable('items')
+  return await db.dropTable('item')
 };
 
 exports._meta = {
