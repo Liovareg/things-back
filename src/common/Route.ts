@@ -2,9 +2,9 @@ import { IRouterContext } from "koa-router";
 
 export default class Route {
 
-    private path: string;
-    private method: string;
-    private action: (ctx: IRouterContext) => void;
+    private path!: string;
+    private method!: string;
+    private action!: (ctx: IRouterContext) => void;
 
     public static newRoute(path: string, method: string, action: (ctx: IRouterContext) => void) {
         const route = new Route();

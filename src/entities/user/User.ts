@@ -12,16 +12,16 @@ export default class User extends PublicEntity {
     }
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column()
-    email: string;
+    email!: string;
 
     @Column({default: ''})
-    name: string;
+    name!: string;
 
     @Column()
-    private hash: string;
+    private hash!: string;
 
     @Column()
     private salt: string;

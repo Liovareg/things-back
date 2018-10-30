@@ -2,11 +2,11 @@ import { Context } from "koa";
 import { IMiddleware, IRouterContext } from "koa-router";
 import { Inject, Singleton } from "typescript-ioc";
 import User from "./User";
+import Logger from "../../common/Logger";
 
 @Singleton
 export default class UserController {
-
-    constructor() { }
+    @Inject private logger!: Logger;
 
     public async getAllUsers(ctx: IRouterContext) {
         let users = await User.find();
@@ -17,6 +17,7 @@ export default class UserController {
         try {
             ctx.body = await User.findOneById(ctx.params.id);
         } catch (e) {
+            this.logger.error('Error during findUserById', e);
             ctx.throw(404);
         }
     }
@@ -27,6 +28,7 @@ export default class UserController {
             user.hashPassword(ctx.request.body.password);
             ctx.body = await user.save();
         } catch (e) {
+            this.logger.error('Error during saveUser', e);
             ctx.throw(400, e);
         }
     }
@@ -40,12 +42,18 @@ export default class UserController {
             Object.assign(user, ctx.request.body);
             ctx.body = await user.save();
         } catch (e) {
+            this.logger.error('Error during updateUser', e);
             ctx.throw(400, e.message);
         }
     }
 
     public async deleteUser(ctx: IRouterContext) {
-        await User.removeById(ctx.params.id);
-        ctx.status = 200;
+        try {
+            await User.removeById(ctx.params.id);
+            ctx.status = 200;
+        } catch (e) {
+            this.logger.error('Error during deleteUser', e);
+            ctx.status = 400;
+        }
     }
 }

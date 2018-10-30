@@ -4,14 +4,14 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 export default class Item extends BaseEntity{
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column()
-    name: string;
+    name!: string;
 
     @Column()
-    description: string;
+    description!: string;
 
     @Column({default: ''})
-    imageUrl: string;
+    imageUrl!: string;
 }

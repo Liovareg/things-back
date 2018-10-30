@@ -1,6 +1,6 @@
 import * as Koa from "koa"
 import * as Router from "koa-router"
-import * as logger from "koa-logger"
+import * as koalogger from "koa-logger"
 import { createConnection, DatabaseType } from "typeorm";
 import * as bodyParser from "koa-bodyparser"
 import * as config from "config";
@@ -13,14 +13,20 @@ import Item from "./entities/item/Item";
 import User from "./entities/user/User";
 import UserRoutes from "./entities/user/UserRoutes";
 import AuthRoutes from "./auth/AuthRoutes";
+import Logger from "./common/Logger";
 
 export default class Rechi {
+    @Inject private itemRoutes!: ItemRoutes;
+    @Inject private userRoutes!: UserRoutes;
+    @Inject private authRoutes!: AuthRoutes;
+    @Inject private logger!: Logger;
 
-    constructor(
-        @Inject private itemRoutes: ItemRoutes,
-        @Inject private userRoutes: UserRoutes,
-        @Inject private authRoutes: AuthRoutes
-    ) { }
+    private checkPublicRoutes = (ctx: Koa.Context): boolean => {
+        if (ctx.method === 'POST' && ctx.url === '/users') return true;
+        if (ctx.url === '/auth') return true;
+
+        return false;
+    }
 
     private async initApp() {
         await createConnection({
@@ -44,8 +50,8 @@ export default class Rechi {
         this.authRoutes.register(router);
 
         app.use(cors());
-        app.use(logger());
-        app.use(jwt({ secret: config.get('jwtSecret') }).unless({ path: [/^\/auth/] }));
+        app.use(koalogger());
+        app.use(jwt({ secret: config.get('jwtSecret') }).unless({ custom: this.checkPublicRoutes}));
         app.use(bodyParser());
         app.use(router.routes());
         app.use(router.allowedMethods());
