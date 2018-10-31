@@ -16,7 +16,7 @@ exports.setup = function(options, seedLink) {
 
 exports.up = async function(db) {
   return await db.createTable('item', {
-    id: { type: 'int', primaryKey: true },
+    id: { type: 'int', primaryKey: true, autoIncrement: true },
     name: 'string',
     description: 'string'
   });

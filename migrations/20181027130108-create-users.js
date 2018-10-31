@@ -16,7 +16,7 @@ var seed;
 
 exports.up = async function(db) {
   return await db.createTable('user', {
-    id: { type: 'int', primaryKey: true },
+    id: { type: 'int', primaryKey: true, autoIncrement: true},
     email: 'string',
     name: 'string',
     hash: 'string',
