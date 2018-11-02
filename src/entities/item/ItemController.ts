@@ -17,7 +17,7 @@ export default class ItemController {
             ctx.body = await Item.findOneById(ctx.params.id);
         } catch (e) {
             this.logger.error('Error during findItemById', e);
-            ctx.throw(404);
+            ctx.throw(400);
         }
     }
 
@@ -48,9 +48,10 @@ export default class ItemController {
     public async deleteItem(ctx: IRouterContext) {
         try {
             await Item.removeById(ctx.params.id);
+            ctx.status = 200;
         } catch (e) {
             this.logger.error('Error during deleteItem', e);
-            ctx.status = 200;
+            ctx.status = 400;
         }
     }
 }
