@@ -5,7 +5,7 @@ const logger: Provider = {
     get: () => {
         return winston.createLogger({
             level: 'info',
-            format: winston.format.cli(),
+            format:  winston.format.simple(),
             transports: [
                 new winston.transports.Console()
             ]
@@ -15,6 +15,6 @@ const logger: Provider = {
 
 @Singleton
 @Provided(logger)
-export default class Logger{
+export default class Logger {
     [key: string]: any;
 }

@@ -29,7 +29,7 @@ export default class User extends PublicEntity {
     [key: string]: any;
 
     public async isPasswordCorrect(password: string): Promise<boolean> {
-        return await compare(password, this.hash);
+        return compare(password, this.hash);
     }
 
     public async hashPassword(password: string) {

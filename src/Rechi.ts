@@ -21,13 +21,6 @@ export default class Rechi {
     @Inject private authRoutes!: AuthRoutes;
     @Inject private logger!: Logger;
 
-    private checkPublicRoutes = (ctx: Koa.Context): boolean => {
-        if (ctx.method === 'POST' && ctx.url === '/users') return true;
-        if (ctx.url === '/auth') return true;
-
-        return false;
-    }
-
     private async initApp() {
         await createConnection({
             type: 'postgres',
@@ -51,7 +44,7 @@ export default class Rechi {
 
         app.use(cors());
         app.use(koalogger());
-        app.use(jwt({ secret: config.get('jwtSecret') }).unless({ custom: this.checkPublicRoutes}));
+        app.use(jwt({ secret: config.get('jwtSecret') }).unless({ path: [/^\/auth/] }));
         app.use(bodyParser());
         app.use(router.routes());
         app.use(router.allowedMethods());
