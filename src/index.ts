@@ -2,7 +2,7 @@ import "reflect-metadata";
 
 import { Container } from "typescript-ioc";
 
-import Rechi from "./Rechi";
+import Things from "./Things";
 
-const app: Rechi = Container.get(Rechi);
+const app: Things = Container.get(Things);
 app.start();

@@ -15,7 +15,7 @@ import UserRoutes from "./entities/user/UserRoutes";
 import AuthRoutes from "./auth/AuthRoutes";
 import Logger from "./common/Logger";
 
-export default class Rechi {
+export default class Things {
     @Inject private itemRoutes!: ItemRoutes;
     @Inject private userRoutes!: UserRoutes;
     @Inject private authRoutes!: AuthRoutes;
@@ -55,7 +55,7 @@ export default class Rechi {
     public async start() {
         const app = await this.initApp();
         const port = process.env.PORT || 3000;
-        console.log(`Started listening on port ${port}...`);
+        console.log(`Started listening on PORT ${port}...`);
         const server = app.listen(port);
         return Promise.resolve(server);
     }
