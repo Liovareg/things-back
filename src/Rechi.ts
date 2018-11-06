@@ -7,7 +7,7 @@ import * as config from "config";
 import * as jwt from "koa-jwt";
 
 import { Inject } from "typescript-ioc";
-import * as cors from "koa2-cors"
+import * as cors from "@koa/cors"
 import ItemRoutes from "./entities/item/ItemRoutes";
 import Item from "./entities/item/Item";
 import User from "./entities/user/User";
@@ -42,7 +42,7 @@ export default class Rechi {
         this.userRoutes.register(router);
         this.authRoutes.register(router);
 
-        app.use(cors());
+        app.use(cors({origin: '*'}));
         app.use(koalogger());
         app.use(jwt({ secret: config.get('jwtSecret') }).unless({ path: [/^\/auth/] }));
         app.use(bodyParser());
