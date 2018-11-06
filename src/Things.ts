@@ -42,7 +42,7 @@ export default class Things {
         this.userRoutes.register(router);
         this.authRoutes.register(router);
 
-        app.use(cors({origin: '*'}));
+        app.use(cors());
         app.use(koalogger());
         app.use(jwt({ secret: config.get('jwtSecret') }).unless({ path: [/^\/auth/] }));
         app.use(bodyParser());
