@@ -44,8 +44,9 @@ export default class AuthController {
             let user = User.create(ctx.request.body);
             user.hashPassword(ctx.request.body.password);
             user = await user.save();
-            ctx.body = user;
-            ctx.body.token = this.authenticate(user, ctx.request.body.password)
+
+            ctx.body = user.getPublic();
+            ctx.body.token = await this.authenticate(user, ctx.request.body.password)
         } catch (e) {
             this.logger.error('Error during signup');
             this.logger.error(e);
