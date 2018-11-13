@@ -24,8 +24,7 @@ export default class ItemController {
 
     public async saveItem(ctx: IRouterContext) {
         try {
-            const item = Item.create(Object.assign({}, ctx.request.body, {user: ctx.state.user.id}));
-            console.log('Saving item', item)
+            const item = Item.create(Object.assign({}, ctx.request.body, {user: ctx.state.user}));
             ctx.body = await item.save();
         } catch (e) {
             this.logger.error('Error during saveItem');
