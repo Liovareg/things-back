@@ -19,7 +19,7 @@ exports.up = function(db) {
 };
 
 exports.down = function(db) {
-  return db.addColumn('item', 'imageUrl');
+  return db.removeColumn('item', 'imageUrl');
 };
 
 exports._meta = {

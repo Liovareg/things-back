@@ -22,6 +22,7 @@ export default class Things {
     @Inject private logger!: Logger;
 
     private async initApp() {
+        //  export DATABASE_URL=postgres://vnnpjqtzzeptqh:b221874fc9a1d8c6402bec60819d6556f6aa5f1438a164dc8417a43911f5b118@ec2-79-125-8-105.eu-west-1.compute.amazonaws.com:5432/dfu6ef3jibta49
         await createConnection({
             type: 'postgres',
             url: process.env.DATABASE_URL,

@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn} from "typeorm";
+import User from "../user/User";
 
 @Entity()
 export default class Item extends BaseEntity{
@@ -14,4 +15,8 @@ export default class Item extends BaseEntity{
 
     @Column({default: ''})
     imageUrl!: string;
+
+    @OneToOne(type => User)
+    @JoinColumn()
+    user!: User
 }
