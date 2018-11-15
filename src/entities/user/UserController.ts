@@ -50,7 +50,7 @@ export default class UserController {
     public async deleteUser(ctx: IRouterContext) {
         try {
             await User.removeById(ctx.params.id);
-            ctx.status = 200;
+            ctx.status = 204;
         } catch (e) {
             this.logger.error('Error during deleteUser', e);
             ctx.status = 400;

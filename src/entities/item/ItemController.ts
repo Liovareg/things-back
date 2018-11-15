@@ -51,7 +51,7 @@ export default class ItemController {
     public async deleteItem(ctx: IRouterContext) {
         try {
             await Item.removeById(ctx.params.id);
-            ctx.status = 200;
+            ctx.status = 204;
         } catch (e) {
             this.logger.error('Error during deleteItem');
             this.logger.error(e);
