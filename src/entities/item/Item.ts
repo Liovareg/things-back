@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn, JoinTable, ManyToMany} from "typeorm";
 import User from "../user/User";
+import Tag from "../tag/Tag";
 
 @Entity()
 export default class Item extends BaseEntity{
@@ -19,4 +20,8 @@ export default class Item extends BaseEntity{
     @OneToOne(type => User)
     @JoinColumn()
     user!: User
+
+    @ManyToMany(type => Tag, tag => tag.items)
+    @JoinTable()
+    tags!: Tag[]
 }

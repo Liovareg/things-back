@@ -14,11 +14,14 @@ import User from "./entities/user/User";
 import UserRoutes from "./entities/user/UserRoutes";
 import AuthRoutes from "./auth/AuthRoutes";
 import Logger from "./common/Logger";
+import TagRoutes from "./entities/tag/TagRoutes";
+import Tag from "./entities/tag/Tag";
 
 export default class Things {
     @Inject private itemRoutes!: ItemRoutes;
     @Inject private userRoutes!: UserRoutes;
     @Inject private authRoutes!: AuthRoutes;
+    @Inject private tagRoutes!: TagRoutes;
     @Inject private logger!: Logger;
 
     private async initApp() {
@@ -27,7 +30,7 @@ export default class Things {
             type: 'postgres',
             url: process.env.DATABASE_URL,
             entities: [
-                Item, User
+                Item, User, Tag
             ],
             extra: {
                 ssl: true
@@ -42,6 +45,7 @@ export default class Things {
         this.itemRoutes.register(router);
         this.userRoutes.register(router);
         this.authRoutes.register(router);
+        this.tagRoutes.register(router);
 
         app.use(cors());
         app.use(koalogger());
@@ -50,7 +54,7 @@ export default class Things {
         app.use(router.routes());
         app.use(router.allowedMethods());
 
-        return Promise.resolve(app);
+        return app;
     };
 
     public async start() {

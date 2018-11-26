@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from "typeorm";
 import { hash, compare, genSaltSync } from "bcryptjs";
 import { PublicEntity, PublicFields } from "../../common/PublicAPI"
+import Tag from "../tag/Tag";
 
 @Entity()
 @PublicFields(['id', 'email', 'name'])
@@ -19,6 +20,9 @@ export default class User extends PublicEntity {
 
     @Column({default: ''})
     name!: string;
+
+    @OneToMany(type => Tag, tag => tag.user)
+    tags!: Tag[];
 
     @Column()
     private hash!: string;
