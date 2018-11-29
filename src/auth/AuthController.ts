@@ -1,10 +1,10 @@
-import { Context } from "koa";
-import { IMiddleware, IRouterContext } from "koa-router";
-import { Inject, Singleton } from "typescript-ioc";
-import User from "../entities/user/User";
-import * as jwt from "jsonwebtoken";
 import * as config from "config";
+import * as jwt from "jsonwebtoken";
+import { IRouterContext } from "koa-router";
+import { Post } from "src/common/RouteDecorators";
+import { Inject, Singleton } from "typescript-ioc";
 import Logger from "../common/Logger";
+import User from "../entities/user/User";
 
 @Singleton
 export default class AuthController {
@@ -16,6 +16,7 @@ export default class AuthController {
             jwt.sign(user.getPublic(), config.get('jwtSecret')) : undefined;
     }
 
+    @Post('/auth/signin')
     public async signin(ctx: IRouterContext) {
         try {
             let user = await User.findOne({ email: ctx.request.body.email });
@@ -39,6 +40,7 @@ export default class AuthController {
         }
     }
 
+    @Post('/auth/signup')
     public async signup(ctx: IRouterContext) {
         try {
             let user = User.create(ctx.request.body);

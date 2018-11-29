@@ -3,17 +3,21 @@ import { Inject, Singleton } from "typescript-ioc";
 import Item from "./Tag";
 import Logger from "../../common/Logger";
 import Tag from "./Tag";
+import API from "src/common/API";
+import { Get, Post, Put, Delete } from "src/common/RouteDecorators";
 
 @Singleton
-export default class TagController {
+export default class TagController extends API{
 
     @Inject private logger!: Logger;
 
+    @Get('/tags')
     public async getAllTags(ctx: IRouterContext) {
         ctx.body = await Tag.find({user: ctx.state.user.id});
         // ctx.body = await Tag.find({where: {user: ctx.state.user.id}, relations: ['items']});
     }
 
+    @Get('/tags/:id')
     public async findTagById(ctx: IRouterContext) {
         try {
             ctx.body = await Tag.findOneById(ctx.params.id);
@@ -24,6 +28,7 @@ export default class TagController {
         }
     }
 
+    @Post('/tags')
     public async saveTag(ctx: IRouterContext) {
         try {
             const tag = Tag.create({...ctx.request.body, ...{user: ctx.state.user}});
@@ -43,6 +48,7 @@ export default class TagController {
         }
     }
 
+    @Put('/tags/:id')
     public async updateTag(ctx: IRouterContext) {
         try {
             let tag = await Tag.findOne({id: ctx.params.id, user: ctx.state.user.id})
@@ -58,6 +64,7 @@ export default class TagController {
         }
     }
 
+    @Delete('/tags')
     public async deleteTag(ctx: IRouterContext) {
         try {
             await Tag.removeById(ctx.params.id);

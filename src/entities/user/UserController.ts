@@ -3,16 +3,19 @@ import { IMiddleware, IRouterContext } from "koa-router";
 import { Inject, Singleton } from "typescript-ioc";
 import User from "./User";
 import Logger from "../../common/Logger";
+import { Get, Post, Put, Delete } from "src/common/RouteDecorators";
 
 @Singleton
 export default class UserController {
     @Inject private logger!: Logger;
 
+    @Get('/users')
     public async getAllUsers(ctx: IRouterContext) {
         let users = await User.find();
         ctx.body = users.map(user => user.getPublic());
     }
 
+    @Get('/users/:id')
     public async findUserById(ctx: IRouterContext) {
         try {
             ctx.body = await User.findOneById(ctx.params.id);
@@ -22,6 +25,7 @@ export default class UserController {
         }
     }
 
+    @Post('/users')
     public async saveUser(ctx: IRouterContext) {
         try {
             const user = User.create(ctx.request.body);
@@ -33,6 +37,7 @@ export default class UserController {
         }
     }
 
+    @Put('/users/:id')
     public async updateUser(ctx: IRouterContext) {
         try {
             const user = await User.findOneById(ctx.params.id);
@@ -47,6 +52,7 @@ export default class UserController {
         }
     }
 
+    @Delete('/users')
     public async deleteUser(ctx: IRouterContext) {
         try {
             await User.removeById(ctx.params.id);
