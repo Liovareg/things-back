@@ -47,7 +47,7 @@ export default class Things {
         this.tagController;
 
         this.app.use(cors());
-        this.app.use(koalogger());
+        // this.app.use(koalogger());
         this.app.use(jwt({ secret: config.get('jwtSecret') }).unless({ path: [/^\/auth/] }));
         this.app.use(bodyParser());
         this.app.use(this.router.routes());

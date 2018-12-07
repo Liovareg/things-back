@@ -41,7 +41,6 @@ export default class TagController extends API{
                 return item;
             })
             tag.items = items;
-            console.log(tag)
             ctx.body = await tag.save();
         } catch (e) {
             this.logger.error('Error during saveTag');

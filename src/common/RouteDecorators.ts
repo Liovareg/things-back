@@ -16,6 +16,7 @@ function routeBuilder(method: string, url: string) {
             methods: [method],
             path: url,
             middleware: async (ctx: Koa.Context, next: () => Promise<any>) => {
+                console.log(`---> ${method} ${url}, params: ${JSON.stringify(ctx.params)}, body: ${JSON.stringify(ctx.request.body)}`);
                 await descriptor.value.call(target, ctx);
                 await next();
             },
