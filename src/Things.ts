@@ -11,15 +11,22 @@ import Item from "./entities/item/Item";
 import ItemController from "./entities/item/ItemController";
 import Tag from "./entities/tag/Tag";
 import User from "./entities/user/User";
+import AuthController from "./auth/AuthController";
+import TagController from "./entities/tag/TagController";
+import UserController from "./entities/user/UserController";
 
 export default class Things {
     @Inject private app!: Koa;
     @Inject private router!: Router;
-    @Inject private itemController!: ItemController;
+    @Inject private itemController!: AuthController;
+    @Inject private authController!: ItemController;
+    @Inject private tagController!: TagController;
+    @Inject private userController!: UserController;
     // @Inject private logger!: Logger;
 
 
     private async initApp() {
+        // https://pgweb-demo.herokuapp.com/#
         //  export DATABASE_URL=postgres://vnnpjqtzzeptqh:b221874fc9a1d8c6402bec60819d6556f6aa5f1438a164dc8417a43911f5b118@ec2-79-125-8-105.eu-west-1.compute.amazonaws.com:5432/dfu6ef3jibta49
         const connection = await createConnection({
             type: 'postgres',
@@ -34,9 +41,10 @@ export default class Things {
             logging: false
         });
 
+        this.authController;
+        this.userController;
         this.itemController;
-
-        
+        this.tagController;
 
         this.app.use(cors());
         this.app.use(koalogger());
