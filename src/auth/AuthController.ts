@@ -1,7 +1,7 @@
 import * as config from "config";
 import * as jwt from "jsonwebtoken";
 import { IRouterContext } from "koa-router";
-import { Post } from "src/common/RouteDecorators";
+import { Post } from "../common/RouteDecorators";
 import { Inject, Singleton } from "typescript-ioc";
 import Logger from "../common/Logger";
 import User from "../entities/user/User";

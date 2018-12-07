@@ -1,9 +1,8 @@
-import { Context } from "koa";
-import { IMiddleware, IRouterContext } from "koa-router";
+import { IRouterContext } from "koa-router";
 import { Inject, Singleton } from "typescript-ioc";
-import User from "./User";
 import Logger from "../../common/Logger";
-import { Get, Post, Put, Delete } from "src/common/RouteDecorators";
+import { Delete, Get, Post, Put } from "../../common/RouteDecorators";
+import User from "./User";
 
 @Singleton
 export default class UserController {

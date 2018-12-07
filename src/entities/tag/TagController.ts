@@ -1,15 +1,17 @@
 import { IRouterContext } from "koa-router";
 import { Inject, Singleton } from "typescript-ioc";
-import Item from "./Tag";
+import API from "../../common/API";
 import Logger from "../../common/Logger";
-import Tag from "./Tag";
-import API from "src/common/API";
-import { Get, Post, Put, Delete } from "src/common/RouteDecorators";
+import { Delete, Get, Post, Put } from "../../common/RouteDecorators";
+import { default as Item, default as Tag } from "./Tag";
+import * as Router from 'koa-router';
 
 @Singleton
 export default class TagController extends API{
 
-    @Inject private logger!: Logger;
+    constructor(@Inject private router: Router, @Inject private logger: Logger){
+        super(router);
+    }
 
     @Get('/tags')
     public async getAllTags(ctx: IRouterContext) {
