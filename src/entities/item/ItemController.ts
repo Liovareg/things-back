@@ -9,7 +9,6 @@ import Item from "./Item";
 @Singleton
 export default class ItemController extends API{
 
-    // constructor(router: Router, logger: Logger){
     constructor(@Inject private router: Router, @Inject private logger: Logger){
         super(router);
     }

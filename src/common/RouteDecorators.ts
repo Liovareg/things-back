@@ -16,8 +16,7 @@ function routeBuilder(method: string, url: string) {
             methods: [method],
             path: url,
             middleware: async (ctx: Koa.Context, next: () => Promise<any>) => {
-                await descriptor.value(ctx);
-                // await descriptor.value.call({ ctx });
+                await descriptor.value.call(target, ctx);
                 await next();
             },
         }

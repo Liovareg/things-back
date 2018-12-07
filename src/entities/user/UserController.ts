@@ -1,12 +1,16 @@
+import * as Router from "koa-router";
 import { IRouterContext } from "koa-router";
 import { Inject, Singleton } from "typescript-ioc";
 import Logger from "../../common/Logger";
 import { Delete, Get, Post, Put } from "../../common/RouteDecorators";
 import User from "./User";
+import API from "../../common/API";
 
 @Singleton
-export default class UserController {
-    @Inject private logger!: Logger;
+export default class UserController extends API {
+    constructor(@Inject private router: Router, @Inject private logger: Logger){
+        super(router);
+    }
 
     @Get('/users')
     public async getAllUsers(ctx: IRouterContext) {
@@ -19,7 +23,7 @@ export default class UserController {
         try {
             ctx.body = await User.findOneById(ctx.params.id);
         } catch (e) {
-            this.logger.error('Error during findUserById', e);
+            console.error('Error during findUserById', e);
             ctx.throw(404);
         }
     }
@@ -31,7 +35,7 @@ export default class UserController {
             user.hashPassword(ctx.request.body.password);
             ctx.body = await user.save();
         } catch (e) {
-            this.logger.error('Error during saveUser', e);
+            console.error('Error during saveUser', e);
             ctx.throw(400, e);
         }
     }
@@ -46,7 +50,7 @@ export default class UserController {
             Object.assign(user, ctx.request.body);
             ctx.body = await user.save();
         } catch (e) {
-            this.logger.error('Error during updateUser', e);
+            console.error('Error during updateUser', e);
             ctx.throw(400, e.message);
         }
     }
@@ -57,7 +61,7 @@ export default class UserController {
             await User.removeById(ctx.params.id);
             ctx.status = 204;
         } catch (e) {
-            this.logger.error('Error during deleteUser', e);
+            console.error('Error during deleteUser', e);
             ctx.status = 400;
         }
     }

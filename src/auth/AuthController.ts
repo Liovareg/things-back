@@ -1,15 +1,19 @@
 import * as config from "config";
 import * as jwt from "jsonwebtoken";
+import * as Router from 'koa-router';
 import { IRouterContext } from "koa-router";
 import { Post } from "../common/RouteDecorators";
 import { Inject, Singleton } from "typescript-ioc";
 import Logger from "../common/Logger";
 import User from "../entities/user/User";
+import API from "../common/API";
 
 @Singleton
-export default class AuthController {
+export default class AuthController extends API {
 
-    @Inject private logger!: Logger
+    constructor(@Inject private router: Router, @Inject private logger: Logger) {
+        super(router);
+    }
 
     private async authenticate(user: User, password: string): Promise<string | undefined> {
         return password && await user.isPasswordCorrect(password) ?
